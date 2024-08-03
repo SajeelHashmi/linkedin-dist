@@ -1,0 +1,160 @@
+
+
+
+{% extends 'base.html' %}
+{% block title %}
+  Home
+{% endblock title %}    
+
+
+{% block body %}
+<style>
+  .loader {
+  width: 2.5em;
+  height: 2.5em;
+  transform: rotate(165deg);
+}
+.loader:before, .loader:after {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  display: block;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 0.25em;
+  transform: translate(-50%, -50%);
+}
+.loader:before {
+  animation: before 2s infinite;
+}
+.loader:after {
+  animation: after 2s infinite;
+}
+
+@keyframes before {
+  0% {
+    width: 0.5em;
+    box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+  }
+  35% {
+    width: 2.5em;
+    box-shadow: 0 -0.5em rgba(225, 20, 98, 0.75), 0 0.5em rgba(111, 202, 220, 0.75);
+  }
+  70% {
+    width: 0.5em;
+    box-shadow: -1em -0.5em rgba(225, 20, 98, 0.75), 1em 0.5em rgba(111, 202, 220, 0.75);
+  }
+  100% {
+    box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+  }
+}
+@keyframes after {
+  0% {
+    height: 0.5em;
+    box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+  }
+  35% {
+    height: 2.5em;
+    box-shadow: 0.5em 0 rgba(61, 184, 143, 0.75), -0.5em 0 rgba(233, 169, 32, 0.75);
+  }
+  70% {
+    height: 0.5em;
+    box-shadow: 0.5em -1em rgba(61, 184, 143, 0.75), -0.5em 1em rgba(233, 169, 32, 0.75);
+  }
+  100% {
+    box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+  }
+}
+#profileTips {
+ transition: all .75s ease-in-out;
+}
+/**
+ * Attempt to center the whole thing!
+ */
+html,
+body {
+  height: 100%;
+}
+
+.loader {
+  position: absolute;
+  top: calc(50% - 1.25em);
+  left: calc(50% - 1.25em);
+}
+</style>  
+
+<div class="container h-75 d-flex ">
+  
+            <div class="col-12 d-flex justify-content-center align-items-center  " id="formDiv">
+                <form action="{% url 'scrape' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <h3>
+                        Try for free
+                      </h3>
+                    </div>
+                    <div class="mb-3" style="width: 50vw;">
+                      <label for="url" class="form-label">Enter your Linkedin URL (include https)</label>
+                      <input type="text" name="url" class="form-control" id="url">
+                    </div>
+          
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+            </div>
+
+            <div id="spinner" class="col-12 d-flex justify-content-center align-items-center d-none">
+              
+              <div class="loader"></div>
+              <h4 class="py-5" id="profileTips"> Scraping Your Profile</h4>
+            </div>
+</div>
+
+<script>
+    const profileTips = document.getElementById('profileTips');
+
+  const form = document.querySelector('form');
+  form.addEventListener('submit', async (e) => {
+    const formDiv = document.querySelector('#formDiv');
+    formDiv.classList.add('d-none');    
+    
+    const spinner = document.querySelector('#spinner');
+    spinner.classList.remove('d-none');
+    
+    setInterval(changeText, 5000);
+  }
+  
+)
+
+async function changeText() {
+  profileTips.style.opacity = 0;
+  const messages = [
+  "Use a professional headshot for a great first impression!",
+  "Write a compelling headline to stand out!",
+  "Craft an engaging summary that tells your story.",
+  "List relevant skills to showcase your expertise.",
+  "Showcase your achievements and milestones.",
+  "Add rich media to make your profile pop!",
+  "Request recommendations for credibility.",
+  "Join industry groups to expand your network.",
+  "Customize your LinkedIn URL for a clean look.",
+  "Stay active and engage with your connections!"
+];
+
+  console.log('changing text');
+  let msg = messages[Math.floor(Math.random() * messages.length)]
+  console.log(msg);
+  await sleep(750)
+  profileTips.innerHTML= msg;
+  await sleep(750)
+
+  profileTips.style.opacity = 1;
+}
+
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+</script>
+
+  {% endblock body %}

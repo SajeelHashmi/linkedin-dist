@@ -1,0 +1,42 @@
+
+
+
+{% extends 'base.html' %}
+{% block title %}
+  Home
+{% endblock title %}    
+
+
+{% block body %}
+
+  
+<div class="container min-vh-100 d-flex ">
+  
+            <div class="col-12 d-flex justify-content-center align-items-center ">
+              <form action="{% url 'getQuestions' %}" method="post">
+                {% csrf_token %}
+                <div>
+                  <h3 class="mb-3">
+                    Could not scrape the URL. Please enter the details manually
+                  </h3>
+                </div>
+                <div class="mb-3" style="width: 50vw;">
+                  <label for="about" class="form-label">Current Headline</label>
+                  <div>
+
+                    <textarea class="form-control" name="about" id="about" rows="1" ></textarea>
+                  </div>
+                </div>
+                <div class="mb-3" style="width: 50vw;">
+                  <label for="about" class="form-label">Current About</label>
+                  <div>
+
+                    <textarea class="form-control" name="about" id="about" rows="10" ></textarea>
+                  </div>
+                </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+            </div>
+</div>
+
+{% endblock body %}

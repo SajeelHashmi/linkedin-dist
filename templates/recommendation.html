@@ -1,0 +1,43 @@
+
+
+
+{% extends 'base.html' %}
+{% block title %}
+  Home
+{% endblock title %}    
+
+
+{% block body %}
+
+<style>
+  .form-control:disabled{
+    border: 1px solid black;
+  }
+</style>
+
+<div class="container min-vh-100 d-flex ">
+  
+            <div class="col-12 d-flex justify-content-center align-items-center ">
+ 
+              <form action="" method="post">
+                {% csrf_token %}
+                <div class="mb-3" style="width: 75vw;">
+                  <h2 for="about" class="form-label">Suggestions:</h2>
+                  <div>
+
+                    <textarea class="form-control" name="about" id="about" disabled rows="20" >{{suggestions}}</textarea>
+                  </div>
+                </div>
+                <div class="mb-3" style="width: 75vw;">
+                  <h2 for="about" class="form-label">Suggestions:</h2>
+                  <div>
+
+                    <textarea class="form-control" name="about" id="about" disabled rows="20" >{{extra_suggestions}}</textarea>
+                  </div>
+                </div>
+
+                  </form>
+            </div>
+</div>
+
+{% endblock body %}
